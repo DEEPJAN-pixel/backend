@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VIMP — Mentor Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body data-page="mentor-dashboard">
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">V</div>
+        <div class="title">VIMP</div>
+      </div>
+      <div class="role">MENTOR</div>
+      <nav>
+        <a class="nav-item" data-page="mentor-dashboard" href="mentor-dashboard.html" title="Dashboard">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 13h8V3H3v10zM13 21h8v-8h-8v8zM3 21h8v-6H3v6zM13 11h8V3h-8v8z"/>
+          </svg>
+          <span class="label">Dashboard</span>
+        </a>
+        <a class="nav-item" data-page="internships" href="internship-search.html" title="Find Internships">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 21l-4.35-4.35"></path><circle cx="11" cy="11" r="7"></circle>
+          </svg>
+          <span class="label">Find Internships</span>
+        </a>
+        <a class="nav-item" data-page="applications" href="application-review.html" title="Applications">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16v16H4z"></path><path d="M4 9h16"></path>
+          </svg>
+          <span class="label">Applications</span>
+        </a>
+        <a class="nav-item" data-page="tasks" href="task-management.html" title="Tasks">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+          <span class="label">Tasks</span>
+        </a>
+        <div class="divider"></div>
+        <a class="nav-item" href="index.html" title="Logout">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <path d="M16 17l5-5-5-5"></path>
+            <path d="M21 12H9"></path>
+          </svg>
+          <span class="label">Logout</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <div>
+      <header class="appbar">
+        <div class="left">
+          <button id="sidebar-toggle" class="toggle" aria-label="Toggle sidebar">☰</button>
+          <h2>Mentor Overview</h2>
+        </div>
+        <div class="right">mentor@vimp.com</div>
+      </header>
+      <div class="container">
+
+        <section class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-icon">👥</div><div><h4>Assigned Students</h4><div class="kpi-sub">Active mentees</div></div><div class="kpi-value">4</div></div>
+          <div class="kpi-card"><div class="kpi-icon">📝</div><div><h4>Open Tasks</h4><div class="kpi-sub">Awaiting completion</div></div><div class="kpi-value">7</div></div>
+          <div class="kpi-card"><div class="kpi-icon">⭐</div><div><h4>Reviews Pending</h4><div class="kpi-sub">Performance updates</div></div><div class="kpi-value">2</div></div>
+          <div class="kpi-card"><div class="kpi-icon">📈</div><div><h4>Avg Progress</h4><div class="progress"><span style="--p:62%"></span></div></div><div class="kpi-value">62%</div></div>
+        </section>
+        <div class="spacer"></div>
+        <section class="block">
+          <h3>Students</h3>
+          <table class="table">
+            <thead><tr><th>Name</th><th>Current Task</th><th>Due</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>Anish</td><td>Weekly Report</td><td>Fri</td><td><a class="linkbtn" href="task-management.html">Review</a></td></tr>
+              <tr><td>Maya</td><td>API Integration</td><td>Thu</td><td><a class="linkbtn" href="task-management.html">Review</a></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

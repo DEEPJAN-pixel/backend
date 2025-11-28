@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Application Review</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="application-review">
+  <header class="topbar">
+    <a class="topbar__brand" href="admin-dashboard.html">VIMP</a>
+    <nav class="topbar__nav">
+      <a href="#" class="logout">Log out</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <h1>Application Review</h1>
+
+    <section>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Applicant Email</th>
+            <th>Internship</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="applications-table-body">
+          <!-- Filled by script.js -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

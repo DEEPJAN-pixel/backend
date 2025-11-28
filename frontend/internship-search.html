@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Internships</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="internship-search">
+
+  <header class="topbar">
+    <a class="topbar__brand" href="student-dashboard.html">VIMP</a>
+    <nav class="topbar__nav"><a class="logout" href="#">Log out</a></nav>
+  </header>
+
+  <main class="shell">
+    <h1>Find Internships</h1>
+
+    <section class="actions search-wrapper">
+      <div class="search-box">
+        <input id="search-input" placeholder="Search roles, companies, or locations..." />
+        <button id="search-btn" class="btn search-btn">Search</button>
+      </div>
+    </section>
+
+
+    <!-- All Internships -->
+    <section>
+      <h2>Available Internships</h2>
+      <div id="internship-list"></div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

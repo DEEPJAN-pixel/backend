@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription – Employer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="employer-subscription">
+
+    <header class="topbar">
+        <a class="topbar__brand" href="employer-dashboard.html">VIMP</a>
+        <nav class="topbar__nav">
+            <a href="employer-dashboard.html">Dashboard</a>
+            <a href="post-internship.html">Post Internship</a>
+            <a href="employer-profile.html">Profile</a>
+            <a href="employer-subscription.html">Subscription</a>
+            <a href="index.html">Logout</a>
+        </nav>
+    </header>
+
+    <main class="shell">
+        <h1 class="mb-lg">Subscription Plans</h1>
+
+        <div class="sub-grid">
+
+            <!-- FREE PLAN -->
+            <div class="sub-card">
+                <h2>FREE</h2>
+                <p class="price">$0 / month</p>
+                <ul class="features">
+                    <li>✔ Post unlimited internships</li>
+                    <li>✔ View applicants</li>
+                    <li>✔ Accept / Reject candidates</li>
+                    <li>✔ Assign mentors</li>
+                    <li>✖ Boosted internship visibility</li>
+                    <li>✖ Priority in student search</li>
+                </ul>
+                <button class="btn disabled">Current Plan</button>
+            </div>
+
+            <!-- PLUS PLAN -->
+            <div class="sub-card highlight">
+                <h2>PLUS</h2>
+                <p class="price">$14.99 / month</p>
+                <ul class="features">
+                    <li>✔ Boost internships for 24 hours</li>
+                    <li>✔ Highlighted in student search</li>
+                    <li>✔ Priority visibility</li>
+                    <li>✔ Auto-matching with students</li>
+                    <li>✔ Detailed analytics for applicants</li>
+                    <li>✔ All FREE plan features</li>
+                </ul>
+                <button id="upgradeBtn" class="btn btn--primary">Upgrade to PLUS</button>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

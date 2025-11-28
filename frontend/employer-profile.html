@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employer Profile — VIMP</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="employer-profile">
+    <div class="app">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo">V</div>
+                <div class="title">VIMP</div>
+            </div>
+            <div class="role">EMPLOYER</div>
+            <nav>
+                <a class="nav-item" href="employer-dashboard.html">Dashboard</a>
+                <a class="nav-item" href="post-internship.html">Post Internship</a>
+                <a class="nav-item" href="application-review.html">Review Applications</a>
+                <a class="nav-item is-active" href="employer-profile.html">Profile</a>
+                <div class="divider"></div>
+                <a class="nav-item logout" href="#">Logout</a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <div>
+            <header class="appbar">
+                <div class="left">
+                    <button id="sidebar-toggle" class="toggle">☰</button>
+                    <h2>Employer Profile</h2>
+                </div>
+            </header>
+
+            <div class="container">
+
+                <section class="block">
+                    <h3>Company Information</h3>
+
+                    <!-- Saved message -->
+                    <div id="save-msg" class="info-msg" style="display:none;">Profile Saved ✓</div>
+
+                    <form id="employer-profile-form">
+
+                        <!-- Logo -->
+                        <div class="pfp-wrapper">
+                            <img id="company-logo-preview" class="pfp" src="" alt="Company Logo" />
+
+                            <div class="pfp-actions">
+                                <label class="btn btn--small">
+                                    Upload Logo
+                                    <input type="file" id="company-logo-input" accept="image/*" hidden>
+                                </label>
+                                <button type="button" id="remove-logo" class="btn btn--small"
+                                    style="background:#eee;color:#333;border:1px solid #ccc;">
+                                    Remove Logo
+                                </button>
+                            </div>
+                        </div>
+
+                        <label>Company Name</label>
+                        <input type="text" id="company-name" required />
+
+                        <label>Industry</label>
+                        <input type="text" id="company-industry" placeholder="IT, Retail, Hospitality..." />
+
+                        <label>Website</label>
+                        <input type="text" id="company-website" placeholder="www.company.com" />
+
+                        <label>Phone</label>
+                        <input type="text" id="company-phone" />
+
+                        <label>Address</label>
+                        <input type="text" id="company-address" />
+
+                        <label>About the Company</label>
+                        <textarea id="company-description" rows="5"></textarea>
+
+                        <button type="submit" class="btn btn--primary" style="margin-top:15px;">Save Profile</button>
+
+                    </form>
+
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

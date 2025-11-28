@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="mentor-profile">
+    <header class="topbar">
+        <a class="topbar__brand" href="mentor-dashboard.html">VIMP</a>
+        <nav class="topbar__nav">
+            <a href="mentor-dashboard.html">Dashboard</a>
+            <a href="mentor-profile.html">Profile</a>
+            <a class="logout" href="#">Logout</a>
+        </nav>
+    </header>
+
+    <main class="shell">
+        <div class="profile-container">
+
+            <!-- LEFT PROFILE CARD -->
+            <div class="profile-card">
+                <div class="avatar">
+                    <img id="mentor-photo" src="default-avatar.png" alt="Mentor Photo">
+                </div>
+
+                <!-- (Optional) real upload later; for now visual only -->
+                <!-- <input type="file" id="mentor-photo-upload" accept="image/*" style="margin-top: 10px;"> -->
+
+                <h2 id="mentor-name-display">Mentor Name</h2>
+                <span class="badge">MENTOR</span>
+
+                <p id="mentor-email-display" class="email"></p>
+                <p id="mentor-address-display" class="address"></p>
+
+                <div class="mentor-skills-display">
+                    <h3>Skills</h3>
+                    <p id="mentor-skills-text">No skills added yet.</p>
+                </div>
+
+                <div class="mentor-resume-display">
+                    <h3>Resume</h3>
+                    <p id="mentor-resume-text">No resume link added.</p>
+                </div>
+            </div>
+
+            <!-- RIGHT EDIT FORM -->
+            <form id="mentorProfileForm" class="profile-form">
+                <h2>Edit Mentor Profile</h2>
+
+                <label class="form__group">
+                    <span>Full Name</span>
+                    <input name="name" required />
+                </label>
+
+                <label class="form__group">
+                    <span>Email</span>
+                    <input name="email" disabled />
+                </label>
+
+                <label class="form__group">
+                    <span>Address</span>
+                    <input name="address" placeholder="City, Country" />
+                </label>
+
+                <label class="form__group">
+                    <span>Skills / Expertise</span>
+                    <textarea name="skills" placeholder="e.g. React, Node.js, Data Science"
+                        style="min-height: 80px;"></textarea>
+                </label>
+
+                <label class="form__group">
+                    <span>Bio</span>
+                    <textarea name="bio" style="min-height: 100px;"></textarea>
+                </label>
+
+                <label class="form__group">
+                    <span>Resume Link</span>
+                    <input name="resume" placeholder="Paste online CV link (Google Drive, PDF URL, etc.)" />
+                </label>
+
+                <button class="btn btn--primary" type="submit">Save Changes</button>
+            </form>
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

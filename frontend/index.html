@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VIMP – Login / Sign Up</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="index">
+    <main class="page">
+        <section class="brand">
+            <div class="brand__logo"><span>V</span></div>
+            <div class="brand__title">
+                <h1>VIMP</h1>
+                <p>Virtual Internship Management Platform</p>
+            </div>
+
+            <p class="brand__lead">
+                Connect students, mentors, employers, and admins in a comprehensive internship
+                management ecosystem.
+            </p>
+
+            <div class="brand__grid">
+                <div class="card">
+                    <div class="icon">🎓</div>
+                    <h3>Students</h3>
+                    <p>Find & Apply</p>
+                </div>
+                <div class="card">
+                    <div class="icon">👥</div>
+                    <h3>Mentors</h3>
+                    <p>Guide & Support</p>
+                </div>
+                <div class="card">
+                    <div class="icon">💼</div>
+                    <h3>Employers</h3>
+                    <p>Post & Hire</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🛡️</div>
+                    <h3>Admins</h3>
+                    <p>Manage System</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="tabs">
+
+                <!-- TAB BUTTONS -->
+                <div class="tabs__list">
+                    <button class="tabs__trigger is-active" id="tab-login-btn">Login</button>
+                    <button class="tabs__trigger" id="tab-signup-btn">Sign Up</button>
+                </div>
+
+                <!-- LOGIN TAB -->
+                <div class="tabs__content is-active" id="tab-login">
+                    <form id="loginForm" class="form">
+                        <label class="form__group">
+                            <span>Email</span>
+                            <input id="login-email" type="email" required placeholder="Enter your email" />
+                        </label>
+
+                        <label class="form__group">
+                            <span>Password</span>
+                            <input id="login-password" type="password" required placeholder="Enter your password" />
+                        </label>
+
+                        <div id="login-error" class="alert alert--error" hidden></div>
+
+                        <div class="alert alert--info">
+                            <p class="alert__title">Demo Accounts:</p>
+                            <ul class="alert__list">
+                                <li>student@vimp.com</li>
+                                <li>mentor@vimp.com</li>
+                                <li>employer@vimp.com</li>
+                                <li>admin@vimp.com</li>
+                                <li><strong>Password:</strong> password</li>
+                            </ul>
+                        </div>
+
+                        <button class="btn btn--primary" type="submit">Login</button>
+                    </form>
+                </div>
+
+                <!-- SIGNUP TAB -->
+                <div class="tabs__content" id="tab-signup">
+                    <form id="signupForm" class="form">
+                        <label class="form__group">
+                            <span>Full Name</span>
+                            <input id="signup-name" type="text" required placeholder="Enter your name" />
+                        </label>
+
+                        <label class="form__group">
+                            <span>Email</span>
+                            <input id="signup-email" type="email" required placeholder="Enter your email" />
+                        </label>
+
+                        <label class="form__group">
+                            <span>Password</span>
+                            <input id="signup-password" type="password" required placeholder="Create a password" />
+                        </label>
+
+                        <label class="form__group">
+                            <span>I am a...</span>
+                            <select id="signup-role" required>
+                                <option value="" disabled selected>Select your role</option>
+                                <option value="student">Student</option>
+                                <option value="mentor">Mentor</option>
+                                <option value="employer">Employer</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </label>
+
+                        <div id="signup-error" class="alert alert--error" hidden></div>
+                        <div id="signup-success" class="alert alert--success" hidden></div>
+
+                        <button class="btn btn--primary" type="submit">Create Account</button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post Internship</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="post-internship">
+  <header class="topbar">
+    <a class="topbar__brand" href="employer-dashboard.html">VIMP</a>
+    <nav class="topbar__nav">
+      <a class="logout" href="#">Log out</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+
+    <h1>Post Internship</h1>
+    
+    <div id="post-success" class="success-msg" style="
+  display:none;
+  background:#e8ffe8;
+  border:1px solid #4caf50;
+  padding:10px 14px;
+  border-radius:6px;
+  margin-bottom:10px;
+  color:#2d7a33;
+  font-weight:500;
+">
+      Internship posted successfully!
+    </div>
+
+    <form id="post-internship-form" class="form">
+      <label class="form__group">
+        <span>Title</span>
+        <input name="title" required placeholder="e.g. Frontend Intern" />
+      </label>
+
+      <label class="form__group">
+        <span>Company</span>
+        <input name="company" required placeholder="e.g. Google, Shopify..." />
+      </label>
+
+      <label class="form__group">
+        <span>Location</span>
+        <input name="location" required placeholder="e.g. Remote, Toronto, On-site" />
+      </label>
+
+      <label class="form__group">
+        <span>Description</span>
+        <textarea name="description" required style="min-height:120px;"></textarea>
+      </label>
+
+      <button class="btn btn--primary" type="submit">Publish</button>
+    </form>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

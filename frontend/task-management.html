@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Management</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <a class="topbar__brand" href="index.html">VIMP</a>
+    <nav class="topbar__nav">
+      <a href="index.html">Log out</a>
+    </nav>
+  </header>
+  <main class="shell">
+
+<h1>Task Management</h1>
+<section class="actions">
+  <input placeholder="Assign task..." style="flex:1;min-width:240px;padding:10px 12px;border-radius:8px;border:1px solid #e5e7eb">
+  <button class="btn btn--primary" onclick="alert('Task assigned (demo)')">Assign</button>
+</section>
+<section style="margin-top:16px">
+  <table class="table">
+    <thead><tr><th>Student</th><th>Task</th><th>Due</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Anish</td><td>Weekly Report</td><td>Fri</td><td><span class="badge">Open</span></td></tr>
+      <tr><td>Maya</td><td>API Integration</td><td>Thu</td><td><span class="badge">Open</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

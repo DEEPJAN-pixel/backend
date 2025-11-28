@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VIMP — Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="admin-dashboard">
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">V</div>
+        <div class="title">VIMP</div>
+      </div>
+      <div class="role">ADMIN</div>
+      <nav>
+        <a class="nav-item" data-page="admin-dashboard" href="admin-dashboard.html" title="Dashboard">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 13h8V3H3v10zM13 21h8v-8h-8v8zM3 21h8v-6H3v6zM13 11h8V3h-8v8z" />
+          </svg>
+          <span class="label">Dashboard</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <div>
+      <header class="appbar">
+        <div class="left">
+          <button id="sidebar-toggle" class="toggle" aria-label="Toggle sidebar">☰</button>
+          <h2>Admin Overview</h2>
+        </div>
+        <div class="right">admin@vimp.com</div>
+      </header>
+
+      <div class="container">
+
+        <!-- KPI Cards (Dynamic, Empty on New Website) -->
+        <section class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon">👥</div>
+            <div>
+              <h4>Total Users</h4>
+              <div class="kpi-sub">Platform-wide</div>
+            </div>
+            <div id="kpi-users" class="kpi-value">0</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">💼</div>
+            <div>
+              <h4>Active Internships</h4>
+              <div class="kpi-sub">Currently ongoing</div>
+            </div>
+            <div id="kpi-internships" class="kpi-value">0</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">📄</div>
+            <div>
+              <h4>Reports Pending</h4>
+              <div class="kpi-sub">Need review</div>
+            </div>
+            <div id="kpi-reports" class="kpi-value">0</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">🛡️</div>
+            <div>
+              <h4>System Health</h4>
+              <div class="progress"><span id="kpi-health" style="--p:100%"></span></div>
+            </div>
+            <div id="kpi-health-value" class="kpi-value">100%</div>
+          </div>
+        </section>
+
+        <div class="spacer"></div>
+
+        <!-- Users Section (Dynamic) -->
+        <section class="block">
+          <h3>Users</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="user-table-body">
+              <!-- Will be filled dynamically -->
+            </tbody>
+          </table>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

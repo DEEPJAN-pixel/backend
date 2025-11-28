@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="student-dashboard">
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">V</div>
+        <div class="title">VIMP</div>
+      </div>
+      <div class="role">STUDENT</div>
+      <nav>
+        <a class="nav-item" data-page="student-dashboard" href="student-dashboard.html">
+          <span class="label">Dashboard</span>
+        </a>
+        <a class="nav-item" href="internship-search.html">
+          <span class="label">Find Internships</span>
+        </a>
+        <a class="nav-item" href="student-tasks.html">
+          <span class="label">My Tasks</span>
+        </a>
+        <a class="nav-item" href="student-certificates.html">
+          <span class="label">Certificates</span>
+        </a>
+        <a class="nav-item" href="student-profile.html">
+          <span class="label">Profile</span>
+        </a>
+        <a class="nav-item" href="student-notifications.html">
+          <span class="label">Notifications</span>
+        </a>
+        <div class="divider"></div>
+        <a class="nav-item logout" href="index (1).html">
+          <span class="label">Logout</span>
+        </a>
+
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main-content">
+      <header class="appbar">
+        <div class="left">
+          <h2>Welcome back, Student!</h2>
+        </div>
+        <div class="right" id="student-email">Email</div>
+      </header>
+
+      <div class="container">
+        <!-- KPI Row -->
+        <section class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon">📦</div>
+            <div>
+              <h4>Total Applications</h4>
+              <div class="kpi-sub">
+                Accepted: <span id="kpi-app-accepted">0</span> |
+                Pending: <span id="kpi-app-pending">0</span>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpi-app-total">0</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">✅</div>
+            <div>
+              <h4>Active Tasks</h4>
+              <div class="kpi-sub">
+                Completed: <span id="kpi-task-completed">0</span>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpi-task-total">0</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">🏅</div>
+            <div>
+              <h4>Certificates</h4>
+              <div class="kpi-sub">Earned</div>
+            </div>
+            <div class="kpi-value" id="kpi-cert-total">0</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">📈</div>
+            <div>
+              <h4>Task Completion</h4>
+              <div class="progress" aria-label="Task Completion">
+                <span id="kpi-task-progress" style="--p:0%"></span>
+              </div>
+            </div>
+            <div class="kpi-value" id="kpi-task-percent">0%</div>
+          </div>
+
+
+          <div class="spacer"></div>
+
+          <!-- Recent Applications -->
+          <section id="apps" class="block">
+            <h3>Recent Applications</h3>
+            <div class="empty">No applications yet. Start exploring internships!</div>
+          </section>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>

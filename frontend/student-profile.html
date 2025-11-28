@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="profile">
+
+    <header class="topbar">
+        <a class="topbar__brand" href="student-dashboard.html">VIMP</a>
+        <nav class="topbar__nav">
+            <a href="student-dashboard.html">Dashboard</a>
+            <a href="internship-search.html">Find Internships</a>
+            <a href="student-tasks.html">My Tasks</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="notifications.html">Notifications</a>
+            <a href="index.html">Logout</a>
+        </nav>
+    </header>
+
+    <main class="shell">
+        <div class="profile-container">
+
+            <!-- LEFT PROFILE CARD -->
+            <div class="profile-card">
+                <div class="avatar">
+                    <img id="profile-photo" alt="Profile Photo">
+
+                </div>
+
+                <!-- Hidden file input -->
+                <input type="file" id="photo-upload" accept="image/*" style="display:none;">
+
+                <!-- Visible button -->
+                <button id="change-photo-btn" class="btn btn--primary" style="margin-top:10px;">
+                    Edit Profile Picture
+                </button>
+                <button id="remove-photo-btn" class="btn" style="margin-top:10px;background:#eee;color:#333;">
+                    Remove Picture
+                </button>
+
+
+                <h2 id="profile-name-display">Student Name</h2>
+                <span class="badge">STUDENT</span>
+
+                <p id="profile-email-display" class="email"></p>
+                <p id="profile-address-display" class="address"></p>
+            </div>
+
+            <!-- RIGHT EDIT FORM -->
+            <form id="profileForm" class="profile-form">
+                <h2>Edit Profile</h2>
+
+                <label class="form__group">
+                    <span>Full Name</span>
+                    <input name="name" required />
+                </label>
+
+                <label class="form__group">
+                    <span>Email</span>
+                    <input name="email" disabled />
+                </label>
+
+                <label class="form__group">
+                    <span>Address</span>
+                    <input name="address" placeholder="City, Country" />
+                </label>
+
+                <label class="form__group">
+                    <span>Bio</span>
+                    <textarea name="bio" style="min-height: 100px;"></textarea>
+                </label>
+
+                <button class="btn btn--primary" type="submit">Save Changes</button>
+            </form>
+
+        </div>
+        <div id="profile-success" class="alert alert--success" style="display:none;">
+            Profile updated successfully!
+        </div>
+
+    </main>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

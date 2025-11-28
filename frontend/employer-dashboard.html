@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VIMP — Employer Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="employer-dashboard">
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">V</div>
+        <div class="title">VIMP</div>
+      </div>
+      <div class="role">EMPLOYER</div>
+      <nav>
+        <a class="nav-item is-active" href="employer-dashboard.html">Dashboard</a>
+        <a class="nav-item" href="post-internship.html">Post Internship</a>
+        <a class="nav-item" href="application-review.html">Review Applications</a>
+        <a class="nav-item" href="employer-profile.html">Profile</a>
+        <div class="divider"></div>
+        <a class="nav-item logout" href="#">Logout</a>
+        <a class="nav-item" href="subscription.html">
+          <span class="label">Subscription</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <div>
+      <header class="appbar">
+        <div class="left">
+          <button id="sidebar-toggle" class="toggle">☰</button>
+          <h2 id="employer-welcome"></h2>
+        </div>
+        <div class="right" id="employer-email"></div>
+      </header>
+
+      <div class="container">
+
+        <!-- KPI ROW -->
+        <section class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon">📄</div>
+            <div>
+              <h4>Total Internships</h4>
+            </div>
+            <div class="kpi-value" id="kpi-total-internships">0</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">👥</div>
+            <div>
+              <h4>Total Applicants</h4>
+            </div>
+            <div class="kpi-value" id="kpi-total-applicants">0</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">🕒</div>
+            <div>
+              <h4>Pending Applications</h4>
+            </div>
+            <div class="kpi-value" id="kpi-pending-apps">0</div>
+          </div>
+        </section>
+
+        <div class="spacer"></div>
+
+
+
+        <section class="block">
+          <h3>Your Posted Internships</h3>
+          <div class="actions" style="margin-bottom:12px;">
+            <a class="linkbtn linkbtn--pri" href="post-internship.html">+ New Internship</a>
+          </div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Applicants</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody id="employer-internship-table">
+              <!-- JS will fill this -->
+            </tbody>
+          </table>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="script.js"></script>
+</body>
+
+</html>
