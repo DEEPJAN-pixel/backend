@@ -17,21 +17,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// SERVE FRONTEND
-app.use(express.static(path.join(__dirname, "../frontend")));
-
-// =======================
-// DB TEST
-// =======================
-app.get("/api/db-test", async (req, res) => {
-    try {
-        const [rows] = await db.query("SELECT 1 AS ok");
-        res.json({ status: "success", db: rows[0] });
-    } catch (err) {
-        console.error(err);
-        res.json({ status: "error", message: err.message });
-    }
-});
+// SERVE FRONTEND (correct path for Railway)
+app.use(express.static(path.join(__dirname, "frontend")));
 
 // ROUTES
 import authRoutes from "./routes/auth.js";
@@ -48,13 +35,13 @@ app.use("/api/student", studentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/subscription", subscriptionRoutes);
 
-// FALLBACK — SEND INDEX.HTML FOR ANY UNKNOWN ROUTE
+// FALLBACK (SPA support)
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/index.html"));
+    res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
 
 // START SERVER
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`VIMP backend+frontend running on port ${PORT}`);
 });
