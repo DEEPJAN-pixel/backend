@@ -9,7 +9,19 @@ console.log("FRONT-END SCRIPT LOADED ✔️");
 // -------------------------
 // 1. Config & LocalStorage Init
 // -------------------------
-const API_BASE = "http://localhost:4000";
+
+let API_BASE;
+if (
+  window.location.origin.startsWith("http://localhost") ||
+  window.location.origin.startsWith("http://127.0.0.1") ||
+  window.location.origin.startsWith("file:")
+) {
+  // Local dev: backend on port 4000
+  API_BASE = "http://localhost:4000";
+} else {
+  // Production: same origin as Railway app
+  API_BASE = window.location.origin;
+}
 
 // Legacy local storage collections (still used by some pages)
 if (!localStorage.getItem("students")) localStorage.setItem("students", JSON.stringify([]));
@@ -290,6 +302,7 @@ const pageLoaders = {
       });
     }
   },
+
   "employer-subscription": async function () {
     const user = loadFromLocal("loggedInUser");
     if (!user || user.role !== "employer") {
@@ -298,7 +311,7 @@ const pageLoaders = {
     }
 
     // Load plan
-    const res = await fetch(`http://localhost:4000/api/subscription/${user.id}`);
+    const res = await fetch(`${API_BASE}/api/subscription/${user.id}`);
     const data = await res.json();
     const currentPlan = data.plan;
 
@@ -313,7 +326,7 @@ const pageLoaders = {
     }
 
     freeBtn.addEventListener("click", async () => {
-      const up = await fetch("http://localhost:4000/api/subscription/upgrade", {
+      const up = await fetch(`${API_BASE}/api/subscription/upgrade`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ employer_id: user.id })
@@ -347,7 +360,7 @@ const pageLoaders = {
     // 1) LOAD KPI FROM BACKEND
     // ============================
     try {
-      const kpiRes = await fetch(`http://localhost:4000/api/student/dashboard/${studentId}`);
+      const kpiRes = await fetch(`${API_BASE}/api/student/dashboard/${studentId}`);
       const kpi = await kpiRes.json();
 
       if (kpi.status === "ok") {
@@ -385,7 +398,7 @@ const pageLoaders = {
     // 2) LOAD RECENT APPLICATIONS
     // ============================
     try {
-      const res = await fetch(`http://localhost:4000/api/applications/student/${studentId}`);
+      const res = await fetch(`${API_BASE}/api/applications/student/${studentId}`);
       const data = await res.json();
 
       if (data.status !== "ok" || !data.applications.length) {
@@ -417,11 +430,8 @@ const pageLoaders = {
     }
   },
 
-
-
-
   // =======================
-  // STUDENT TASKS (still local)
+  // STUDENT TASKS (DB)
   // =======================
   "student-tasks": async function () {
     if (!loggedInUser || loggedInUser.role !== "student") return;
@@ -431,7 +441,7 @@ const pageLoaders = {
     tbody.innerHTML = "";
 
     try {
-      const res = await fetch(`http://localhost:4000/api/student/tasks/${loggedInUser.id}`);
+      const res = await fetch(`${API_BASE}/api/student/tasks/${loggedInUser.id}`);
       const data = await res.json();
 
       if (data.status !== "ok") {
@@ -456,7 +466,7 @@ const pageLoaders = {
         const btn = tr.querySelector(".mark-done");
         btn.addEventListener("click", async () => {
           try {
-            await fetch(`http://localhost:4000/api/student/tasks/${t.id}/complete`, {
+            await fetch(`${API_BASE}/api/student/tasks/${t.id}/complete`, {
               method: "POST"
             });
             // Just refresh table
@@ -472,7 +482,6 @@ const pageLoaders = {
       tbody.innerHTML = "<tr><td colspan='4'>Server error loading tasks.</td></tr>";
     }
   },
-
 
   // =======================
   // STUDENT APPLICATIONS PAGE (DB)
@@ -523,7 +532,7 @@ const pageLoaders = {
   },
 
   // =======================
-  // CERTIFICATES (still local)
+  // CERTIFICATES (backend)
   // =======================
   "certificates": async function () {
     if (!loggedInUser || loggedInUser.role !== "student") return;
@@ -536,7 +545,7 @@ const pageLoaders = {
 
     try {
       // Fetch certificates from backend
-      const res = await fetch(`http://localhost:4000/api/certificates/student/${studentId}`);
+      const res = await fetch(`${API_BASE}/api/certificates/student/${studentId}`);
       const data = await res.json();
 
       if (data.status !== "ok") {
@@ -575,7 +584,7 @@ const pageLoaders = {
 
     // 1) FETCH PROFILE FROM DB
     try {
-      const res = await fetch(`http://localhost:4000/api/student/profile/${id}`);
+      const res = await fetch(`${API_BASE}/api/student/profile/${id}`);
       const data = await res.json();
       if (data.status !== "ok") return;
 
@@ -611,7 +620,7 @@ const pageLoaders = {
         };
 
         const updateRes = await fetch(
-          "http://localhost:4000/api/student/profile/update",
+          `${API_BASE}/api/student/profile/update`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -642,7 +651,7 @@ const pageLoaders = {
         reader.onload = async () => {
           const base64 = reader.result;
 
-          await fetch("http://localhost:4000/api/student/profile/photo", {
+          await fetch(`${API_BASE}/api/student/profile/photo`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id, photo: base64 })
@@ -659,7 +668,7 @@ const pageLoaders = {
 
       // 4) REMOVE PHOTO
       removeBtn.onclick = async () => {
-        await fetch("http://localhost:4000/api/student/profile/photo", {
+        await fetch(`${API_BASE}/api/student/profile/photo`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id, photo: "" })
@@ -676,10 +685,8 @@ const pageLoaders = {
     }
   },
 
-
-
   // =======================
-  // NOTIFICATIONS (still local)
+  // NOTIFICATIONS (backend)
   // =======================
   "notifications": async function () {
     if (!loggedInUser) return;
@@ -689,7 +696,7 @@ const pageLoaders = {
     listEl.innerHTML = "Loading...";
 
     try {
-      const res = await fetch(`http://localhost:4000/api/student/notifications/${loggedInUser.id}`);
+      const res = await fetch(`${API_BASE}/api/student/notifications/${loggedInUser.id}`);
       const data = await res.json();
 
       if (data.status !== "ok") {
@@ -714,7 +721,7 @@ const pageLoaders = {
         div.addEventListener("click", async () => {
           if (n.is_read) return;
           try {
-            await fetch(`http://localhost:4000/api/student/notifications/${n.id}/read`, {
+            await fetch(`${API_BASE}/api/student/notifications/${n.id}/read`, {
               method: "POST"
             });
             div.classList.add("read");
@@ -729,8 +736,6 @@ const pageLoaders = {
       listEl.innerHTML = "<div class='empty'>Server error loading notifications.</div>";
     }
   },
-
-
 
   // =======================
   // INTERNSHIP SEARCH (student) – BACKEND
@@ -1327,7 +1332,6 @@ const pageLoaders = {
 
     const logoInput = document.getElementById("company-logo-input");
     const logoPreview = document.getElementById("company-logo-preview");
-    const removeLogoBtn = document.getElementById("remove-logo");
 
     if (!form || !nameInput || !logoPreview) return;
 
@@ -1356,6 +1360,7 @@ const pageLoaders = {
       });
     }
 
+    const removeLogoBtn = document.getElementById("remove-logo");
     if (removeLogoBtn) {
       removeLogoBtn.addEventListener("click", () => {
         employer.logo = "";
