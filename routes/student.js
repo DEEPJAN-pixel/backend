@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const pool = require("../db");
+import pool from "../db.js";
 
 // ================================
 // 1) STUDENT DASHBOARD KPI
@@ -9,7 +9,6 @@ router.get("/dashboard/:id", async (req, res) => {
     try {
         const studentId = req.params.id;
 
-        // ---- Applications KPI ----
         const [apps] = await pool.query(
             "SELECT status, COUNT(*) as cnt FROM applications WHERE student_id = ? GROUP BY status",
             [studentId]
@@ -28,7 +27,6 @@ router.get("/dashboard/:id", async (req, res) => {
             else if (s === "rejected") appsRejected += r.cnt;
         });
 
-        // ---- Tasks KPI ----
         const [tasks] = await pool.query(
             "SELECT status, COUNT(*) AS cnt FROM tasks WHERE student_id = ? GROUP BY status",
             [studentId]
@@ -48,7 +46,6 @@ router.get("/dashboard/:id", async (req, res) => {
             ? 0
             : Math.round((taskCompleted / taskTotal) * 100);
 
-        // ---- Certificates KPI ----
         const [certRows] = await pool.query(
             "SELECT COUNT(*) AS cnt FROM certificates WHERE student_id = ?",
             [studentId]
@@ -87,14 +84,14 @@ router.get("/tasks/:id", async (req, res) => {
         const studentId = req.params.id;
         const [rows] = await pool.query(
             `SELECT 
-          t.id,
-          t.title,
-          t.description,
-          t.due_date,
-          t.status
-       FROM tasks t
-       WHERE t.student_id = ?
-       ORDER BY t.due_date IS NULL, t.due_date`,
+                t.id,
+                t.title,
+                t.description,
+                t.due_date,
+                t.status
+            FROM tasks t
+            WHERE t.student_id = ?
+            ORDER BY t.due_date IS NULL, t.due_date`,
             [studentId]
         );
 
@@ -163,11 +160,13 @@ router.patch("/profile/:id", async (req, res) => {
 router.patch("/profile/:id/photo", async (req, res) => {
     try {
         const studentId = req.params.id;
-        const { photo } = req.body; // base64 or empty string
+        const { photo } = req.body;
+
         await pool.query(
             "UPDATE users SET photo = ? WHERE id = ? AND role = 'student'",
             [photo || "", studentId]
         );
+
         res.json({ status: "ok" });
     } catch (err) {
         console.error("PROFILE PHOTO ERROR:", err);
@@ -178,10 +177,12 @@ router.patch("/profile/:id/photo", async (req, res) => {
 router.delete("/profile/:id/photo", async (req, res) => {
     try {
         const studentId = req.params.id;
+
         await pool.query(
             "UPDATE users SET photo = '' WHERE id = ? AND role = 'student'",
             [studentId]
         );
+
         res.json({ status: "ok" });
     } catch (err) {
         console.error("PROFILE PHOTO DELETE ERROR:", err);
@@ -199,6 +200,7 @@ router.get("/notifications/:id", async (req, res) => {
             "SELECT id, type, message, is_read, created_at FROM notifications WHERE user_id = ? ORDER BY created_at DESC",
             [studentId]
         );
+
         res.json({ status: "ok", notifications: rows });
     } catch (err) {
         console.error("NOTIFICATIONS LOAD ERROR:", err);
@@ -209,10 +211,12 @@ router.get("/notifications/:id", async (req, res) => {
 router.post("/notifications/:id/read", async (req, res) => {
     try {
         const notifId = req.params.id;
+
         await pool.query(
             "UPDATE notifications SET is_read = 1 WHERE id = ?",
             [notifId]
         );
+
         res.json({ status: "ok" });
     } catch (err) {
         console.error("NOTIFICATION READ ERROR:", err);
@@ -221,4 +225,3 @@ router.post("/notifications/:id/read", async (req, res) => {
 });
 
 export default router;
-
