@@ -1,65 +1,83 @@
+// routes/auth.js (ESM, fully fixed)
+
 import express from "express";
-import bcrypt from "bcrypt";
+import pool from "../db.js";
 import jwt from "jsonwebtoken";
-import db from "../db.js";
-import dotenv from "dotenv";
-dotenv.config();
+import bcrypt from "bcryptjs";
 
 const router = express.Router();
 
+// =======================
 // SIGNUP
+// =======================
 router.post("/signup", async (req, res) => {
     try {
-        const { role, name, email, password } = req.body;
+        const { name, email, password, role } = req.body;
 
-        if (!role || !name || !email || !password)
+        if (!name || !email || !password || !role) {
             return res.status(400).json({ status: "error", message: "Missing fields" });
+        }
 
-        const [existing] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-        if (existing.length > 0)
-            return res.status(400).json({ status: "error", message: "Email already registered" });
+        // check duplicate
+        const [exists] = await pool.query("SELECT id FROM users WHERE email = ?", [email]);
+        if (exists.length > 0) {
+            return res.json({ status: "error", message: "Email already exists" });
+        }
 
         const hash = await bcrypt.hash(password, 10);
 
-        await db.query(
-            "INSERT INTO users (role, name, email, password_hash) VALUES (?, ?, ?, ?)",
-            [role, name, email, hash]
+        const [result] = await pool.query(
+            "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
+            [name, email, hash, role]
         );
 
-        res.json({ status: "ok", message: "Signup successful" });
+        res.json({ status: "ok", message: "Account created", userId: result.insertId });
+
     } catch (err) {
-        console.error(err);
+        console.error("SIGNUP ERROR:", err);
         res.status(500).json({ status: "error", message: "Server error" });
     }
 });
 
+// =======================
 // LOGIN
+// =======================
 router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const [rows] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+        const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
 
-        if (rows.length === 0)
-            return res.status(400).json({ status: "error", message: "Invalid email" });
+        if (rows.length === 0) {
+            return res.json({ status: "error", message: "Invalid email or password" });
+        }
 
         const user = rows[0];
 
-        const match = await bcrypt.compare(password, user.password_hash);
-        if (!match)
-            return res.status(400).json({ status: "error", message: "Incorrect password" });
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return res.json({ status: "error", message: "Invalid email or password" });
+        }
+
+        const token = jwt.sign(
+            { id: user.id, role: user.role },
+            process.env.JWT_SECRET || "secret123",
+            { expiresIn: "7d" }
+        );
 
         res.json({
             status: "ok",
+            token,
             user: {
                 id: user.id,
-                role: user.role,
+                email: user.email,
                 name: user.name,
-                email: user.email
+                role: user.role
             }
         });
+
     } catch (err) {
-        console.error(err);
+        console.error("LOGIN ERROR:", err);
         res.status(500).json({ status: "error", message: "Server error" });
     }
 });
