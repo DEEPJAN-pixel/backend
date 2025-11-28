@@ -303,8 +303,11 @@ const pageLoaders = {
     }
   },
 
+  // =======================
+  // EMPLOYER SUBSCRIPTION (backend)
+  // =======================
   "employer-subscription": async function () {
-    const user = loadFromLocal("loggedInUser");
+    const user = JSON.parse(localStorage.getItem("loggedInUser") || "null");
     if (!user || user.role !== "employer") {
       location.href = "index.html";
       return;
@@ -356,9 +359,7 @@ const pageLoaders = {
 
     appsSection.innerHTML = "<h3>Recent Applications</h3>";
 
-    // ============================
     // 1) LOAD KPI FROM BACKEND
-    // ============================
     try {
       const kpiRes = await fetch(`${API_BASE}/api/student/dashboard/${studentId}`);
       const kpi = await kpiRes.json();
@@ -394,9 +395,7 @@ const pageLoaders = {
       console.error("KPI LOAD ERROR:", err);
     }
 
-    // ============================
     // 2) LOAD RECENT APPLICATIONS
-    // ============================
     try {
       const res = await fetch(`${API_BASE}/api/applications/student/${studentId}`);
       const data = await res.json();
@@ -469,7 +468,6 @@ const pageLoaders = {
             await fetch(`${API_BASE}/api/student/tasks/${t.id}/complete`, {
               method: "POST"
             });
-            // Just refresh table
             location.reload();
           } catch (err) {
             console.error("TASK COMPLETE ERROR:", err);
@@ -544,7 +542,6 @@ const pageLoaders = {
     section.innerHTML = "<h3>Certificates</h3>";
 
     try {
-      // Fetch certificates from backend
       const res = await fetch(`${API_BASE}/api/certificates/student/${studentId}`);
       const data = await res.json();
 
@@ -560,7 +557,6 @@ const pageLoaders = {
         return;
       }
 
-      // Render certificates
       certs.forEach(cert => {
         const div = document.createElement("div");
         div.className = "cert-item";
@@ -582,7 +578,6 @@ const pageLoaders = {
 
     const id = loggedInUser.id;
 
-    // 1) FETCH PROFILE FROM DB
     try {
       const res = await fetch(`${API_BASE}/api/student/profile/${id}`);
       const data = await res.json();
@@ -590,7 +585,6 @@ const pageLoaders = {
 
       const user = data.profile;
 
-      // LEFT CARD
       document.getElementById("profile-name-display").textContent = user.name || "";
       document.getElementById("profile-email-display").textContent = user.email;
       document.getElementById("profile-address-display").textContent =
@@ -599,16 +593,14 @@ const pageLoaders = {
       const photoEl = document.getElementById("profile-photo");
       photoEl.src = user.photo || "default-avatar.png";
 
-      // FORM FILL
       const form = document.getElementById("profileForm");
       form.name.value = user.name || "";
-      form.email.value = user.email;  // disabled input
+      form.email.value = user.email;
       form.address.value = user.address || "";
       form.bio.value = user.bio || "";
 
       const successBox = document.getElementById("profile-success");
 
-      // 2) UPDATE PROFILE
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -636,7 +628,6 @@ const pageLoaders = {
         }
       });
 
-      // 3) PHOTO UPLOAD
       const uploadInput = document.getElementById("photo-upload");
       const changeBtn = document.getElementById("change-photo-btn");
       const removeBtn = document.getElementById("remove-photo-btn");
@@ -666,7 +657,6 @@ const pageLoaders = {
         reader.readAsDataURL(file);
       };
 
-      // 4) REMOVE PHOTO
       removeBtn.onclick = async () => {
         await fetch(`${API_BASE}/api/student/profile/photo`, {
           method: "POST",
