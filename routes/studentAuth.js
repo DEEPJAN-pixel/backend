@@ -1,8 +1,12 @@
-const express = require("express");
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import pool from "../db.js";    // <-- FIXED PATH (same style as all routes)
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const pool = require("./db");
 
 // -----------------------------
 // STUDENT REGISTER
@@ -24,7 +28,9 @@ router.post("/register", async (req, res) => {
         res.json({ status: "ok", message: "Student registered successfully" });
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ status: "error", message: "Email already exists or DB error" });
+        return res
+            .status(500)
+            .json({ status: "error", message: "Email already exists or DB error" });
     }
 });
 
@@ -34,12 +40,17 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
-    const [rows] = await pool.query("SELECT * FROM students WHERE email = ?", [email]);
+    const [rows] = await pool.query(
+        "SELECT * FROM students WHERE email = ?",
+        [email]
+    );
+
     if (rows.length === 0)
         return res.status(400).json({ status: "error", message: "Student not found" });
 
     const student = rows[0];
     const isValid = await bcrypt.compare(password, student.password);
+
     if (!isValid)
         return res.status(400).json({ status: "error", message: "Incorrect password" });
 
@@ -62,4 +73,4 @@ router.post("/login", async (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

@@ -1,6 +1,7 @@
-const mysql = require("mysql2");
-const fs = require("fs");
-require("dotenv").config();
+import mysql from "mysql2";
+import fs from "fs";
+import dotenv from "dotenv";
+dotenv.config();
 
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
@@ -9,9 +10,9 @@ const pool = mysql.createPool({
     database: process.env.DB_NAME,
     port: process.env.DB_PORT,
     ssl: {
-        ca: fs.readFileSync("./ca.pem"),  // MUST INCLUDE Aiven CA
-        rejectUnauthorized: true
-    }
+        ca: fs.readFileSync("./ca.pem"),
+        rejectUnauthorized: true,
+    },
 });
 
-module.exports = pool.promise();
+export default pool.promise();

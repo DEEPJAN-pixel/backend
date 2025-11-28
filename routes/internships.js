@@ -1,91 +1,68 @@
-const express = require("express");
+import express from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import db from "../db.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const router = express.Router();
-const pool = require("../db");
 
-// =========================
-// POST INTERNSHIP (Create)
-// =========================
-router.post("/", async (req, res) => {
+// SIGNUP
+router.post("/signup", async (req, res) => {
     try {
-        const {
-            employer_id,
-            title,
-            company,
-            location,
-            description,
-            mode,
-            type,
-            stipend,
-            start_date,
-            end_date
-        } = req.body;
+        const { role, name, email, password } = req.body;
 
-        if (!employer_id || !title || !company || !location || !description) {
-            return res.status(400).json({
-                status: "error",
-                message: "Missing required fields."
-            });
-        }
+        if (!role || !name || !email || !password)
+            return res.status(400).json({ status: "error", message: "Missing fields" });
 
-        await pool.query(
-            `INSERT INTO internships 
-                (employer_id, title, company, location, description, mode, type, stipend, start_date, end_date) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            [
-                employer_id,
-                title,
-                company,
-                location,
-                description,
-                mode || null,
-                type || null,
-                stipend || null,
-                start_date || null,
-                end_date || null,
-                "open"
-            ]
+        const [existing] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+        if (existing.length > 0)
+            return res.status(400).json({ status: "error", message: "Email already registered" });
+
+        const hash = await bcrypt.hash(password, 10);
+
+        await db.query(
+            "INSERT INTO users (role, name, email, password_hash) VALUES (?, ?, ?, ?)",
+            [role, name, email, hash]
         );
 
-        res.json({ status: "ok", message: "Internship posted" });
-
+        res.json({ status: "ok", message: "Signup successful" });
     } catch (err) {
-        console.error("INTERNSHIP POST ERROR:", err);
+        console.error(err);
         res.status(500).json({ status: "error", message: "Server error" });
     }
 });
 
-// =========================
-// GET ALL INTERNSHIPS
-// =========================
-router.get("/all", async (req, res) => {
+// LOGIN
+router.post("/login", async (req, res) => {
     try {
-        const [rows] = await pool.query(
-            "SELECT * FROM internships ORDER BY id DESC"
-        );
-        res.json({ status: "ok", internships: rows });
-    } catch (e) {
-        console.error(e);
+        const { email, password } = req.body;
+
+        const [rows] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+
+        if (rows.length === 0)
+            return res.status(400).json({ status: "error", message: "Invalid email" });
+
+        const user = rows[0];
+
+        const match = await bcrypt.compare(password, user.password_hash);
+        if (!match)
+            return res.status(400).json({ status: "error", message: "Incorrect password" });
+
+        res.json({
+            status: "ok",
+            user: {
+                id: user.id,
+                role: user.role,
+                name: user.name,
+                email: user.email
+            }
+        });
+    } catch (err) {
+        console.error(err);
         res.status(500).json({ status: "error", message: "Server error" });
     }
 });
 
-// =========================
-// GET INTERNSHIPS OF EMPLOYER
-// =========================
-router.get("/employer/:id", async (req, res) => {
-    try {
-        const employerId = req.params.id;
-
-        const [rows] = await pool.query(
-            "SELECT * FROM internships WHERE employer_id = ? ORDER BY id DESC",
-            [employerId]
-        );
-
-        res.json({ status: "ok", internships: rows });
-    } catch (e) {
-        console.error(e);
-        res.status(500).json({ status: "error", message: "Server error" });
-    }
-});
-
-module.exports = router;
+export default router;

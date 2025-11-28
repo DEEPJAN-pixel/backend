@@ -220,4 +220,5 @@ router.post("/notifications/:id/read", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
+

@@ -1,6 +1,7 @@
-const express = require("express");
+import express from "express";
+import pool from "../db.js";
+
 const router = express.Router();
-const pool = require("../db");
 
 // simple: list all users grouped by role
 router.get("/users", async (req, res) => {
@@ -15,4 +16,4 @@ router.get("/users", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

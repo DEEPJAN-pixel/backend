@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const pool = require("../db");
-const auth = require("../middleware/auth");
+import express from "express";
+import pool from "../db.js";
+import auth from "../middleware/auth.js";
 
-// Apply for internship
+const router = express.Router();
+
 router.post("/apply", auth, async (req, res) => {
     try {
         const userId = req.user.id;
@@ -24,4 +24,4 @@ router.post("/apply", auth, async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
